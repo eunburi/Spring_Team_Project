@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="aaa.service.MCompanyMapper">
+
+
+<insert id="insertCompany" parameterType="mcDTO">
+    INSERT INTO company (cid, cpw, cname, cbuild, ccategory, cstaff, csales, ccall, cceo, caddress, ccompanyFile, ccontent, ctype, cbcnt)
+    VALUES (
+        #{cid},#{cpw},#{cname},#{cbuild},#{ccategory},#{cstaff},#{csales},#{ccall},#{cceo},#{caddress},#{ccompanyFile},
+        #{ccontent},#{ctype},0
+    )
+</insert>
+
+<select id="loginCompany" resultType="int">
+    select count(*) from company where cid = #{userid} and cpw = #{userpw}
+</select>
+
+<select id="idChk" resultType="int">
+    select count(*) from company where cid = #{cid}
+</select>
+
+<select  id="deatilCompany">
+	select * from company where cid = #{cid}
+</select>
+
+<select  id="deatilaaaCompany">
+	select * from company where cid = #{userid}
+</select>
+
+<update id="modifffy" parameterType="mcDTO">
+		update company set 
+		cname = #{cname}, cbuild= #{cbuild}, ccategory= #{ccategory},
+		cstaff = #{cstaff}, csales = #{csales}, ccontent = #{ccontent},cpw=#{cpw}
+		where cid = #{cid} 
+</update>
+
+<delete id="delettt" parameterType="mcDTO">
+	delete from company where cid =
+	#{cid} and cpw = #{cpw}
+</delete>
+
+<update id="paycmember" parameterType="mcDTO">
+	update company set
+	ctype = #{ctype}, cdate = #{cdate}
+	where cid = #{cid}
+</update>
+</mapper>

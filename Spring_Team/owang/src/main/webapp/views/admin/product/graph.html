@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>상품 정산 그래프</title>
+<!-- jQuery 및 Chart.js 라이브러리 포함 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+</head>
+<body>
+<div>
+    <div>총매출: [[${totalAmount}]]원</div>
+    <canvas id="myChart" width="500" height="300"></canvas>
+</div>
+<script th:inline="javascript">
+    // 그래프 데이터
+    var graphData = [[${graphData}]];
+
+    var labels = graphData.map(function(item) {
+        return item.date;
+    });	
+    var data = graphData.map(function(item) {
+        return item.totalAmount;
+    });
+    
+	var graphData = {
+	    labels: labels,
+	    datasets: [{
+	        label: "일매출",
+	        data: data,
+	        backgroundColor: 'orange',
+	        borderColor: 'orange',
+	        borderWidth: 3
+	    }]
+	};
+    // 캔버스에 그래프 그리기
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line', // 꺾은선 그래프
+        data: graphData,
+        options: {
+	        responsive: false, // 반응형 해제
+            scales: {
+                y: {
+                    beginAtZero: true, // y축 시작값 0으로 설정
+                }
+            },
+	        plugins: {
+	            title: {
+	                display: true,
+	                text: '일매출',
+	                padding: {
+	                    top: 10,
+	                    bottom: 30
+	                }
+        		},
+	            legend: {
+	                display: false // 범례 표시 해제
+	            }
+	        }
+        }
+    });
+</script>
+    <div>
+		<table border="">
+		    <thead>
+		        <tr>
+		            <th>순위</th>
+		            <th>개인회원</th>
+		            <th>합계</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		        <tr th:each="item, index : ${slist}">
+		            <td th:text="${index.index + 1}"></td>
+		            <td th:text="${item['sid']}"></td>
+		            <td th:text="${item['total']}"></td>
+		        </tr>
+		    </tbody>
+		</table>
+	</div>
+    <div>
+		<table border="">
+		    <thead>
+		        <tr>
+		            <th>순위</th>
+		            <th>기업회원</th>
+		            <th>합계</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		        <tr th:each="item, index : ${clist}">
+		            <td th:text="${index.index + 1}"></td>
+		            <td th:text="${item['cid']}"></td>
+		            <td th:text="${item['total']}"></td>
+		        </tr>
+		    </tbody>
+		</table>
+	</div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>결제결과</title>
+</head>
+<body>
+<h1>[[${dto.buyerName}]]님의 결제가 완료되었습니다.</h1>
+	<table border="">
+		<tr>
+			<td>주문번호</td>
+			<td>상품명</td>
+			<td>결제금액</td>
+			<td>결제시간</td>
+		</tr>
+		<tr>
+			<td th:text="${dto.merchantUid}"></td>
+			<td th:text="${dto.pname}"></td>
+			<td th:text="${dto.amount}"></td>
+			<!-- 포맷팅 필요 -->
+			<td th:text="${#dates.format(dto.paidAt, 'yyyy-MM-dd')}"></td>
+		</tr>
+	</table>
+</body>
+</html>

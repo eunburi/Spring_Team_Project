@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="aaa.service.AdminCompanyMapper">
+	
+	<select id="companyList" resultType="mcDTO" parameterType="mcDTO">
+		select * from company where capproval = false  order by cno desc limit #{start}, #{limit}
+	</select>
+	
+		
+	<select id="adminAddCont" resultType="Integer">
+		select count(*) from company
+	</select>
+
+	<select id="adminCDetail">
+		select * from company where cno = #{cno}
+	</select>
+	
+	<update id="checkoutFile"  parameterType="Integer">
+	    update company set capproval = true where cno = #{cno}
+	</update>
+
+</mapper>
